@@ -1,73 +1,281 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Cadastro de Produtos - Lista de Compras</title>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="description" content="Oliva — Minimalist Facilitated Grocery Planning">
+  <meta name="theme-color" content="#FAF8F5">
+  <title>Oliva — Pantry & Catalog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <div class="paper">
-      <h1>✎ Cadastro de Produtos</h1>
-      
-      <form id="formCadastro">
-        <input type="hidden" id="codProdutoEdit">
 
-        <div class="form-group">
-          <label class="form-label">Nome do Produto *</label>
-          <input type="text" class="form-input" id="nomeProduto" placeholder="Ex: Arroz, Feijão, Leite..." required>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">Unidade *</label>
-          <select class="form-select" id="unidadeProduto" required>
-            <option value="">-- Escolher --</option>
-            <option value="un">un - Unidade</option>
-            <option value="kg">kg - Quilograma</option>
-            <option value="lt">lt - Litro</option>
-            <option value="mt">mt - Metro</option>
-            <option value="pc">pc - Pacote</option>
-          </select>
-        </div>
-        
-        <div class="form-group">
-          <label class="form-label">Quantidade *</label>
-          <input type="number" class="form-input" id="quantProduto" min="1" placeholder="1" required>
-        </div>
+  <!-- Realistic Smartphone Chassis -->
+  <div class="device-chassis">
+    <div class="device-screen">
 
-        <div class="form-group">
-          <label class="form-label">Código de Barra</label>
-          <input type="text" class="form-input" id="codigoBarra" placeholder="13 dígitos" maxlength="13" pattern="\d{13}">
+      <!-- Status Bar & Dynamic Island -->
+      <div class="status-bar-wrapper">
+        <span>9:41</span>
+        <div class="dynamic-island">
+          <div class="camera-lens"></div>
+          <div class="sensor-dot"></div>
         </div>
-        
-        <div class="btn-group">
-          <button type="submit" class="btn-submit">✓ Salvar Produto</button>
-          <button type="button" class="btn-cancel" id="btnCancelar" style="display: none;">✗ Cancelar</button>
+        <div class="status-bar-icons">
+          <i data-lucide="signal" style="width:13px;height:13px;"></i>
+          <i data-lucide="wifi" style="width:13px;height:13px;"></i>
+          <div class="battery-pill"><div class="battery-level"></div></div>
         </div>
-      </form>
+      </div>
 
-      <div class="produtos-lista" id="produtosLista">
-        <h2>Produtos Cadastrados</h2>
-        <div id="listaProdutosCadastrados"></div>
+      <!-- App Viewport -->
+      <div class="app-viewport">
+
+        <!-- App Header -->
+        <header class="app-header">
+          <div class="header-row">
+            <a href="index.html" class="brand-unit">
+              <div class="brand-icon-box">
+                <i data-lucide="leaf" style="width:20px;height:20px;"></i>
+              </div>
+              <div class="brand-texts">
+                <span class="brand-title">Oliva</span>
+                <span class="brand-sub">Pantry & Groceries</span>
+              </div>
+            </a>
+
+            <div class="header-tools">
+              <button type="button" class="icon-button" title="How to use Oliva" data-open-tutorial>
+                <i data-lucide="circle-help" style="width:17px;height:17px;"></i>
+              </button>
+              <a href="lista.html" class="icon-button" title="View Shopping Cart" id="goToListBtn">
+                <i data-lucide="shopping-bag" style="width:17px;height:17px;"></i>
+                <span class="header-badge" id="listBadge">0</span>
+              </a>
+            </div>
+          </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+          <!-- Facilitated Quick Add Card -->
+          <section class="quick-entry-card">
+            <form id="quickAddForm" class="quick-input-main-row">
+              <span class="quick-entry-icon">
+                <i data-lucide="plus" style="width:17px;height:17px;"></i>
+              </span>
+              <input 
+                type="text" 
+                id="quickAddInput" 
+                class="quick-full-input" 
+                placeholder='Add item, paste list, or space-separated...'
+                autocomplete="off"
+              >
+              <button type="submit" class="quick-submit-arrow" title="Add item" id="quickAddBtn">
+                <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+              </button>
+            </form>
+
+            <div class="quick-actions-bar">
+              <button type="button" class="magic-paste-trigger" title="Paste full list (WhatsApp, Notes)" data-open-magic-importer>
+                <i data-lucide="wand-2" style="width:13px;height:13px;"></i>
+                <span>Paste List</span>
+              </button>
+              <button type="button" class="toggle-form-btn" id="toggleFullFormBtn">
+                <span id="toggleFormText">Detailed form</span>
+                <i data-lucide="chevron-down" style="width:13px;height:13px;" id="toggleFormIcon"></i>
+              </button>
+            </div>
+
+            <!-- 1-Click Quick Suggestions -->
+            <div class="quick-suggestions" id="quickSuggestions">
+              <button type="button" class="suggestion-pill" data-item="Whole Milk 1lt">+ Milk</button>
+              <button type="button" class="suggestion-pill" data-item="Sourdough Bread">+ Bread</button>
+              <button type="button" class="suggestion-pill" data-item="Organic Eggs 12un">+ Eggs</button>
+              <button type="button" class="suggestion-pill" data-item="Bananas 1kg">+ Bananas</button>
+              <button type="button" class="suggestion-pill" data-item="Olive Oil 1lt">+ Olive Oil</button>
+            </div>
+          </section>
+
+          <!-- Collapsible Detailed Form -->
+          <section class="detailed-form-card" id="fullFormCard">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <h2 class="detailed-form-title" id="formTitle">
+                <i data-lucide="package-plus" style="width:17px;height:17px;"></i>
+                <span>Add Product</span>
+              </h2>
+              <button type="button" class="icon-button" id="closeFormBtn" title="Close" style="width:24px;height:24px;">
+                <i data-lucide="x" style="width:13px;height:13px;"></i>
+              </button>
+            </div>
+
+            <form id="formProduct" novalidate>
+              <input type="hidden" id="productIdEdit">
+
+              <div class="form-field-group">
+                <label class="form-field-label" for="productName">Product Name</label>
+                <div class="form-input-container">
+                  <span class="form-icon-prefix"><i data-lucide="tag" style="width:14px;height:14px;"></i></span>
+                  <input type="text" class="form-input-ctrl" id="productName" placeholder="e.g. Extra Virgin Olive Oil" required autocomplete="off">
+                </div>
+              </div>
+
+              <div class="form-2col">
+                <div class="form-field-group">
+                  <label class="form-field-label" for="productUnit">Unit</label>
+                  <div class="form-input-container">
+                    <span class="form-icon-prefix"><i data-lucide="layers" style="width:14px;height:14px;"></i></span>
+                    <select class="form-input-ctrl" id="productUnit" required>
+                      <option value="un">Unit (un)</option>
+                      <option value="kg">Kilogram (kg)</option>
+                      <option value="lt">Liter (lt)</option>
+                      <option value="mt">Meter (mt)</option>
+                      <option value="pc">Package (pc)</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-field-group">
+                  <label class="form-field-label" for="productQty">Quantity</label>
+                  <div class="form-input-container">
+                    <span class="form-icon-prefix"><i data-lucide="plus" style="width:14px;height:14px;"></i></span>
+                    <input type="number" class="form-input-ctrl" id="productQty" min="0.1" step="any" placeholder="1" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-field-group">
+                <label class="form-field-label" for="productCategory">Supermarket Aisle</label>
+                <div class="form-input-container">
+                  <span class="form-icon-prefix"><i data-lucide="store" style="width:14px;height:14px;"></i></span>
+                  <select class="form-input-ctrl" id="productCategory">
+                    <option value="produce">Produce (Fruits & Veggies)</option>
+                    <option value="dairy">Dairy & Eggs</option>
+                    <option value="bakery">Bakery</option>
+                    <option value="meat">Meat & Seafood</option>
+                    <option value="pantry">Pantry & Grains</option>
+                    <option value="beverages">Beverages</option>
+                    <option value="household">Household</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-field-group">
+                <label class="form-field-label" for="productBarcode">Barcode (EAN-13)</label>
+                <div class="form-input-container">
+                  <span class="form-icon-prefix"><i data-lucide="barcode" style="width:14px;height:14px;"></i></span>
+                  <input type="tel" class="form-input-ctrl" id="productBarcode" placeholder="13 digits (optional)" maxlength="13">
+                </div>
+              </div>
+
+              <div style="display:flex; gap:6px; margin-top:2px;">
+                <button type="submit" class="btn btn-primary btn-full" id="btnSave">
+                  <i data-lucide="check" style="width:15px;height:15px;"></i>
+                  <span>Save Product</span>
+                </button>
+                <button type="button" class="btn btn-ghost" id="btnCancelEdit" style="display:none;">
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </section>
+
+          <!-- Search & Category Filters (inline) -->
+          <section class="filters-wrap">
+            <div class="filter-chips-row">
+              <button class="filter-search-toggle" id="filterSearchToggle" title="Search pantry">
+                <i data-lucide="search" style="width:14px;height:14px;"></i>
+              </button>
+              <div class="category-scroll-chips" id="categoryChips">
+                <button class="cat-chip active" data-category="all">All</button>
+                <button class="cat-chip" data-category="produce">Produce</button>
+                <button class="cat-chip" data-category="dairy">Dairy</button>
+                <button class="cat-chip" data-category="bakery">Bakery</button>
+                <button class="cat-chip" data-category="meat">Meat</button>
+                <button class="cat-chip" data-category="pantry">Pantry</button>
+                <button class="cat-chip" data-category="beverages">Drinks</button>
+                <button class="cat-chip" data-category="household">Household</button>
+              </div>
+            </div>
+            <div class="filter-search-expanded-row" id="filterSearchExpandedRow" style="display:none;">
+              <input
+                type="text"
+                id="searchInput"
+                class="filter-search-input-full"
+                placeholder="Search pantry..."
+                autocomplete="off"
+              >
+            </div>
+          </section>
+
+          <!-- Products Catalog List -->
+          <section class="grocery-list" id="productsContainer">
+            <!-- Rendered dynamically -->
+          </section>
+
+        </main>
+
+      </div>
+
+      <!-- Floating Bottom Nav Bar -->
+      <nav class="floating-tab-bar">
+        <a href="index.html" class="nav-tab-btn active" id="navProducts">
+          <i data-lucide="package" style="width:17px;height:17px;"></i>
+          <span>Pantry</span>
+        </a>
+        <a href="lista.html" class="nav-tab-btn" id="navList">
+          <i data-lucide="shopping-bag" style="width:17px;height:17px;"></i>
+          <span>Shopping</span>
+          <span class="nav-tab-badge" id="bottomNavBadge">0</span>
+        </a>
+      </nav>
+
+      <!-- Home Indicator -->
+      <div class="home-indicator-bar"></div>
+
+      <!-- Toast Message -->
+      <div id="toast" class="toast-msg" role="alert" aria-live="polite">
+        <i data-lucide="info" style="width:13px;height:13px;" id="toastIcon"></i>
+        <span id="toastMessage"></span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal Dialog -->
+  <div id="modalOverlay" class="modal-scrim">
+    <div class="modal-panel">
+      <div class="modal-icon-badge" id="modalIconWrap">
+        <i data-lucide="check" style="width:18px;height:18px;" id="modalIcon"></i>
+      </div>
+      <h3 class="modal-header-txt" id="modalTitle">Notice</h3>
+      <p class="modal-msg-txt" id="modalMessage"></p>
+      <div class="modal-actions-row">
+        <button class="btn btn-primary" id="modalOkBtn">Continue</button>
       </div>
     </div>
-    
-    <div class="nav">
-      <a href="lista.html" class="nav-btn">Ver Lista de Compras →</a>
-    </div>
-  </div>
-  
-  <!-- Overlay e Notificação -->
-  <div id="overlay" class="overlay"></div>
-  <div id="notification" class="notification">
-    <div class="notification-icon" id="notifIcon">✓</div>
-    <div class="notification-title" id="notifTitle">Sucesso!</div>
-    <div class="notification-message" id="notifMessage">Mensagem aqui</div>
-    <button class="notification-btn" onclick="fecharNotificacao()">OK</button>
   </div>
 
-  <script src="cadastro.js"></script>
+  <!-- Delete Confirm Dialog -->
+  <div id="confirmOverlay" class="modal-scrim">
+    <div class="modal-panel">
+      <div class="modal-icon-badge danger">
+        <i data-lucide="trash-2" style="width:18px;height:18px;"></i>
+      </div>
+      <h3 class="modal-header-txt">Remove Product?</h3>
+      <p class="modal-msg-txt">This will remove the item from your pantry and active shopping list.</p>
+      <div class="modal-actions-row">
+        <button class="btn btn-ghost" id="confirmCancelBtn">Cancel</button>
+        <button class="btn btn-danger" id="confirmOkBtn">Remove</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/app.js"></script>
 </body>
 </html>

@@ -1,41 +1,223 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Lista de Compras</title>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="description" content="Oliva — Facilitated In-Store Shopping Cart">
+  <meta name="theme-color" content="#FAF8F5">
+  <title>Oliva — Shopping List</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="container">
-    <div class="paper">
-      <h1>🛒 Lista de Compras</h1>
-      
-      <div id="listaItens" class="lista-items"></div>
-      
-      <button id="btnEnviar" class="btn-enviar" disabled>📤 Enviar para o Servidor</button>
+
+  <!-- Realistic Smartphone Chassis -->
+  <div class="device-chassis">
+    <div class="device-screen">
+
+      <!-- Status Bar & Dynamic Island -->
+      <div class="status-bar-wrapper">
+        <span>9:41</span>
+        <div class="dynamic-island">
+          <div class="camera-lens"></div>
+          <div class="sensor-dot"></div>
+        </div>
+        <div class="status-bar-icons">
+          <i data-lucide="signal" style="width:13px;height:13px;"></i>
+          <i data-lucide="wifi" style="width:13px;height:13px;"></i>
+          <div class="battery-pill"><div class="battery-level"></div></div>
+        </div>
+      </div>
+
+      <!-- App Viewport -->
+      <div class="app-viewport">
+
+        <!-- App Header -->
+        <header class="app-header">
+          <div class="header-row">
+            <a href="lista.html" class="brand-unit">
+              <div class="brand-icon-box">
+                <i data-lucide="leaf" style="width:20px;height:20px;"></i>
+              </div>
+              <div class="brand-texts">
+                <span class="brand-title">Oliva</span>
+                <span class="brand-sub" id="progressSubtitle">0 of 0 collected</span>
+              </div>
+            </a>
+
+            <div class="header-tools">
+              <button type="button" class="icon-button" title="How to use Oliva" data-open-tutorial>
+                <i data-lucide="circle-help" style="width:17px;height:17px;"></i>
+              </button>
+              <button type="button" class="icon-button" id="btnToggleGroup" title="Group by Aisle">
+                <i data-lucide="layers" style="width:16px;height:16px;"></i>
+              </button>
+              <button type="button" class="icon-button" id="btnResetList" title="Reset cart progress">
+                <i data-lucide="rotate-ccw" style="width:16px;height:16px;"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Live Progress Box -->
+          <div class="progress-box">
+            <div class="progress-labels">
+              <span class="progress-title-txt">
+                <i data-lucide="check-circle-2" style="width:13px;height:13px;color:var(--olive-main);"></i>
+                <span>Cart Progress</span>
+              </span>
+              <span class="progress-pill" id="progressPct">0%</span>
+            </div>
+            <div class="progress-rail">
+              <div class="progress-rail-fill" id="progressFill"></div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+          <!-- Facilitated Quick Input on List -->
+          <section class="quick-entry-card">
+            <form id="quickAddListForm" class="quick-input-main-row">
+              <span class="quick-entry-icon">
+                <i data-lucide="plus" style="width:17px;height:17px;"></i>
+              </span>
+              <input 
+                type="text" 
+                id="quickAddListInput" 
+                class="quick-full-input" 
+                placeholder='Add item, paste list, or space-separated...'
+                autocomplete="off"
+              >
+              <button type="submit" class="quick-submit-arrow" title="Add item">
+                <i data-lucide="arrow-right" style="width:14px;height:14px;"></i>
+              </button>
+            </form>
+
+            <div class="quick-actions-bar">
+              <button type="button" class="magic-paste-trigger" title="Paste full list (WhatsApp, Notes)" data-open-magic-importer>
+                <i data-lucide="wand-2" style="width:13px;height:13px;"></i>
+                <span>Paste List</span>
+              </button>
+              <span class="quick-hint-text">or type space-separated</span>
+            </div>
+
+            <!-- 1-Click Quick Suggestions -->
+            <div class="quick-suggestions" id="quickSuggestionsList">
+              <button type="button" class="suggestion-pill" data-item="Whole Milk 1lt">+ Milk</button>
+              <button type="button" class="suggestion-pill" data-item="Sourdough Bread">+ Bread</button>
+              <button type="button" class="suggestion-pill" data-item="Organic Eggs 12un">+ Eggs</button>
+              <button type="button" class="suggestion-pill" data-item="Bananas 1kg">+ Bananas</button>
+            </div>
+          </section>
+
+          <!-- Segmented Filter Tabs -->
+          <section class="filters-wrap">
+            <div class="segment-buttons">
+              <button class="segment-btn active" data-filter="all" id="filterAll">
+                <i data-lucide="list" style="width:13px;height:13px;"></i>
+                <span>All (<span id="countAll">0</span>)</span>
+              </button>
+              <button class="segment-btn" data-filter="pending" id="filterPending">
+                <i data-lucide="circle" style="width:13px;height:13px;"></i>
+                <span>Pending (<span id="countPending">0</span>)</span>
+              </button>
+              <button class="segment-btn" data-filter="collected" id="filterCollected">
+                <i data-lucide="check-check" style="width:13px;height:13px;"></i>
+                <span>Done (<span id="countCollected">0</span>)</span>
+              </button>
+            </div>
+          </section>
+
+          <!-- Interactive In-Store Shopping Items -->
+          <section class="grocery-list" id="shoppingListContainer">
+            <!-- Rendered dynamically -->
+          </section>
+
+          <!-- Submit to Server Action Bar -->
+          <section style="margin-top:2px;">
+            <button class="btn btn-primary btn-full" id="btnSubmitShopping" disabled style="padding:12px 16px; font-size:0.88rem;">
+              <i data-lucide="send" style="width:16px;height:16px;"></i>
+              <span id="submitBtnText">Collect all items to submit</span>
+            </button>
+          </section>
+
+          <!-- Submissions History Block -->
+          <section class="history-container">
+            <div class="history-top">
+              <span class="history-title-txt">
+                <i data-lucide="history" style="width:13px;height:13px;"></i>
+                <span>Recent Submissions</span>
+              </span>
+              <button class="btn btn-ghost" id="btnClearHistory" style="padding:2px 7px; font-size:0.7rem; border-radius:4px;">
+                Clear
+              </button>
+            </div>
+            <ul class="history-rows" id="historyList">
+              <!-- Rendered dynamically -->
+            </ul>
+          </section>
+
+        </main>
+
+      </div>
+
+      <!-- Floating Bottom Nav Bar -->
+      <nav class="floating-tab-bar">
+        <a href="index.html" class="nav-tab-btn" id="navProducts">
+          <i data-lucide="package" style="width:17px;height:17px;"></i>
+          <span>Pantry</span>
+        </a>
+        <a href="lista.html" class="nav-tab-btn active" id="navList">
+          <i data-lucide="shopping-bag" style="width:17px;height:17px;"></i>
+          <span>Shopping</span>
+          <span class="nav-tab-badge" id="bottomNavBadge">0</span>
+        </a>
+      </nav>
+
+      <!-- Home Indicator -->
+      <div class="home-indicator-bar"></div>
+
+      <!-- Toast Message -->
+      <div id="toast" class="toast-msg" role="alert" aria-live="polite">
+        <i data-lucide="info" style="width:13px;height:13px;" id="toastIcon"></i>
+        <span id="toastMessage"></span>
+      </div>
+
     </div>
-    
-    <div class="nav">
-      <a href="index.html" class="nav-btn">← Gerenciar Produtos</a>
-    </div>
-    
-    <div class="historico">
-      <h2>📋 Histórico de Envios</h2>
-      <ul id="historicoLista" class="historico-list"></ul>
-    </div>
-  </div>
-  
-  <!-- Overlay e Notificação -->
-  <div id="overlay" class="overlay"></div>
-  <div id="notification" class="notification">
-    <div class="notification-icon" id="notifIcon">✓</div>
-    <div class="notification-title" id="notifTitle">Sucesso!</div>
-    <div class="notification-message" id="notifMessage">Mensagem aqui</div>
-    <button class="notification-btn" onclick="fecharNotificacao()">OK</button>
   </div>
 
-  <script src="lista.js"></script>
+  <!-- Modal Dialog -->
+  <div id="modalOverlay" class="modal-scrim">
+    <div class="modal-panel">
+      <div class="modal-icon-badge" id="modalIconWrap">
+        <i data-lucide="check-circle-2" style="width:18px;height:18px;" id="modalIcon"></i>
+      </div>
+      <h3 class="modal-header-txt" id="modalTitle">Notice</h3>
+      <p class="modal-msg-txt" id="modalMessage"></p>
+      <div class="modal-actions-row">
+        <button class="btn btn-primary" id="modalOkBtn">Got it</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reset Cart Confirm Dialog -->
+  <div id="resetConfirmOverlay" class="modal-scrim">
+    <div class="modal-panel">
+      <div class="modal-icon-badge">
+        <i data-lucide="rotate-ccw" style="width:18px;height:18px;"></i>
+      </div>
+      <h3 class="modal-header-txt">Reset Shopping Cart?</h3>
+      <p class="modal-msg-txt">This will uncheck all items and reset collected quantities back to 0.</p>
+      <div class="modal-actions-row">
+        <button class="btn btn-ghost" id="resetCancelBtn">Cancel</button>
+        <button class="btn btn-primary" id="resetOkBtn">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/list.js"></script>
 </body>
 </html>
