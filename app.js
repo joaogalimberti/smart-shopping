@@ -111,8 +111,14 @@ confirmOkBtn?.addEventListener('click', () => {
 function updateBadges() {
   const list = getShoppingList();
   const count = list.length;
-  if (listBadge) listBadge.textContent = count;
-  if (bottomNavBadge) bottomNavBadge.textContent = count;
+  if (listBadge) {
+    listBadge.textContent = count;
+    listBadge.style.display = count > 0 ? 'inline-flex' : 'none';
+  }
+  if (bottomNavBadge) {
+    bottomNavBadge.textContent = count;
+    bottomNavBadge.style.display = count > 0 ? 'inline-flex' : 'none';
+  }
 }
 
 /* ── Render Products Catalog ── */

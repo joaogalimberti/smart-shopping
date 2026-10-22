@@ -115,7 +115,10 @@ function updateProgress(list) {
   if (countAll) countAll.textContent = total;
   if (countPending) countPending.textContent = pending;
   if (countCollected) countCollected.textContent = collected;
-  if (bottomNavBadge) bottomNavBadge.textContent = total;
+  if (bottomNavBadge) {
+    bottomNavBadge.textContent = total;
+    bottomNavBadge.style.display = total > 0 ? 'inline-flex' : 'none';
+  }
 
   // Submit button state
   if (btnSubmitShopping) {
@@ -225,8 +228,7 @@ function renderItemCard(item) {
             <i data-lucide="${catIcon}" style="width:10px;height:10px;"></i>
             ${catName}
           </span>
-          <span>&bull;</span>
-          <span>Need: ${item.needed} ${unitLabel}</span>
+          <span class="grocery-need-tag">Need: ${item.needed} ${unitLabel}</span>
         </div>
       </div>
 

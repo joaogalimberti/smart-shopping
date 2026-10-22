@@ -7,15 +7,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Studio Backdrop */
-  --desktop-bg: #EFECE6;
-  --desktop-gradient: radial-gradient(circle at 50% 20%, #F8F6F2 0%, #E8E4DC 100%);
+  /* Studio Backdrop - Architectural Linen & Ambient Lighting */
+  --desktop-bg: #EAE6DF;
+  --desktop-gradient: 
+    radial-gradient(circle at 18% 18%, rgba(206, 222, 212, 0.6) 0%, transparent 48%),
+    radial-gradient(circle at 82% 82%, rgba(236, 224, 210, 0.55) 0%, transparent 48%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.45) 0%, transparent 62%),
+    radial-gradient(rgba(35, 55, 45, 0.045) 1.2px, transparent 1.2px);
 
-  /* Smartphone Shell Dimensions - Sleek Ultra-Thin Bezel */
-  --phone-width: 382px;
-  --phone-height: min(800px, 92vh);
-  --phone-radius: 44px;
-  --screen-radius: 38px;
+  /* iPhone 16 Pro Realistic Dimensions & Radii */
+  --phone-width: 390px;
+  --phone-height: min(844px, 93vh);
+  --phone-radius: 54px;
+  --screen-radius: 46px;
 
   /* App Canvas (Linen & Crisp White) */
   --app-bg: #FAF8F5;
@@ -83,7 +87,7 @@
   --radius-full: 9999px;
 
   /* Elevation Shadows */
-  --shadow-device: 0 25px 60px -12px rgba(28, 38, 48, 0.14), 0 6px 18px -4px rgba(0, 0, 0, 0.04);
+  --shadow-device: 0 35px 80px -15px rgba(20, 32, 26, 0.30), 0 15px 35px -8px rgba(0, 0, 0, 0.16);
   --shadow-card: 0 2px 8px -2px rgba(25, 35, 30, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
   --shadow-hover: 0 8px 18px -4px rgba(25, 35, 30, 0.08);
 }
@@ -104,29 +108,104 @@ body {
   font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: var(--desktop-bg);
   background-image: var(--desktop-gradient);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 28px 28px;
+  background-position: 0 0, 0 0, 0 0, 0 0;
   background-attachment: fixed;
   color: var(--text-main);
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 16px 10px;
+  padding: 18px 12px;
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── Professional Smartphone Device Frame (Sleek Titanium Bezel) ── */
+/* ── Realistic iPhone 16 Pro Chassis ── */
 .device-chassis {
   width: 100%;
   max-width: var(--phone-width);
   height: var(--phone-height);
-  background: #14161A;
+  background: linear-gradient(145deg, #2D313A 0%, #1A1C20 40%, #151619 60%, #2A2D35 100%);
   border-radius: var(--phone-radius);
-  padding: 4px;
-  box-shadow: var(--shadow-device);
-  border: 1.5px solid #D2CFCA;
+  padding: 9px;
+  box-shadow:
+    0 0 0 1px #464B56, /* Outer chamfer edge */
+    0 0 0 2.5px #1C1E23, /* Dark bezel frame */
+    0 0 0 4.5px #32353E, /* Titanium outer perimeter */
+    inset 0 0 3px rgba(255, 255, 255, 0.18), /* Metallic light reflection */
+    0 35px 80px -15px rgba(20, 32, 26, 0.30), /* Ambient ground shadow */
+    0 15px 35px -8px rgba(0, 0, 0, 0.16);
   position: relative;
   display: flex;
   flex-direction: column;
+}
+
+/* Ground shadow under the phone */
+.device-chassis::after {
+  content: '';
+  position: absolute;
+  bottom: -22px;
+  left: 6%;
+  right: 6%;
+  height: 26px;
+  background: radial-gradient(ellipse at center, rgba(20, 32, 26, 0.28) 0%, rgba(20, 32, 26, 0.08) 55%, transparent 75%);
+  filter: blur(8px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Top Speaker Slit */
+.hw-speaker-slit {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 52px;
+  height: 3px;
+  background: #22252B;
+  border-radius: 3px;
+  z-index: 80;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.8);
+}
+
+/* Side Hardware Buttons */
+.hw-btn {
+  position: absolute;
+  background: linear-gradient(180deg, #3E434D 0%, #202227 50%, #353942 100%);
+  z-index: -1;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+.hw-action {
+  left: -7px;
+  top: 110px;
+  width: 4px;
+  height: 28px;
+  border-radius: 3px 0 0 3px;
+}
+
+.hw-vol-up {
+  left: -7px;
+  top: 156px;
+  width: 4px;
+  height: 52px;
+  border-radius: 3px 0 0 3px;
+}
+
+.hw-vol-down {
+  left: -7px;
+  top: 222px;
+  width: 4px;
+  height: 52px;
+  border-radius: 3px 0 0 3px;
+}
+
+.hw-power {
+  right: -7px;
+  top: 172px;
+  width: 4px;
+  height: 74px;
+  border-radius: 0 3px 3px 0;
 }
 
 /* Phone Screen */
@@ -138,17 +217,19 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
 }
 
 /* Dynamic Island & Status Bar */
 .status-bar-wrapper {
   background: var(--app-bg);
-  padding: 9px 18px 4px;
+  padding: 11px 22px 6px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   font-weight: 700;
+  letter-spacing: -0.02em;
   color: var(--text-main);
   position: relative;
   flex-shrink: 0;
@@ -157,45 +238,54 @@ body {
 
 .dynamic-island {
   position: absolute;
-  top: 8px;
+  top: 9px;
   left: 50%;
   transform: translateX(-50%);
-  width: 78px;
-  height: 18px;
+  width: 114px;
+  height: 28px;
   background: #000000;
-  border-radius: 12px;
+  border-radius: 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 7px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  justify-content: flex-end;
+  padding: 0 10px;
+  gap: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  cursor: default;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dynamic-island:hover {
+  width: 128px;
 }
 
 .camera-lens {
-  width: 7px;
-  height: 7px;
+  width: 10px;
+  height: 10px;
   border-radius: var(--radius-full);
-  background: #0D1016;
+  background: radial-gradient(circle at 35% 35%, #182236 0%, #050608 80%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.8);
 }
 
 .sensor-dot {
-  width: 5px;
-  height: 5px;
+  width: 6px;
+  height: 6px;
   border-radius: var(--radius-full);
-  background: #080A0E;
+  background: #07090C;
 }
 
 .status-bar-icons {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
 }
 
 .battery-pill {
-  width: 19px;
-  height: 9.5px;
+  width: 22px;
+  height: 11.5px;
   border: 1.5px solid var(--text-main);
-  border-radius: 3px;
+  border-radius: 3.5px;
   padding: 1px;
   position: relative;
   display: flex;
@@ -205,28 +295,28 @@ body {
 .battery-pill::after {
   content: '';
   position: absolute;
-  right: -3px;
-  top: 1.5px;
+  right: -3.5px;
+  top: 2px;
   width: 1.5px;
-  height: 3.5px;
+  height: 4.5px;
   background: var(--text-main);
   border-radius: 0 1px 1px 0;
 }
 
 .battery-level {
-  width: 75%;
+  width: 78%;
   height: 100%;
   background: var(--text-main);
-  border-radius: 1px;
+  border-radius: 1.5px;
 }
 
 /* Home Indicator Bar at Bottom of Phone */
 .home-indicator-bar {
-  width: 110px;
-  height: 3.5px;
-  background: rgba(20, 32, 25, 0.25);
+  width: 134px;
+  height: 4.5px;
+  background: rgba(20, 32, 25, 0.28);
   border-radius: var(--radius-full);
-  margin: 4px auto 4px;
+  margin: 6px auto 6px;
   flex-shrink: 0;
   z-index: 70;
 }
@@ -246,8 +336,14 @@ body {
     box-shadow: none;
     background: transparent;
   }
+  .device-chassis::after,
+  .hw-btn,
+  .hw-speaker-slit {
+    display: none;
+  }
   .device-screen {
     border-radius: 0;
+    box-shadow: none;
   }
   .dynamic-island {
     display: none;
@@ -743,6 +839,14 @@ body {
   width: 100%;
 }
 
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.52;
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none;
+}
+
 /* ── Filter Segment Bar ── */
 .filters-wrap {
   display: flex;
@@ -994,8 +1098,15 @@ body {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 2px;
+  gap: 6px;
+  margin-top: 3px;
+}
+
+.grocery-need-tag {
+  color: var(--text-sub);
+  font-size: 0.72rem;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .tag-badge {
@@ -1006,6 +1117,7 @@ body {
   border-radius: var(--radius-full);
   font-size: 0.66rem;
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .tag-produce { background: var(--pastel-sage-bg); color: var(--pastel-sage-text); }
@@ -1257,13 +1369,13 @@ body {
 .nav-tab-btn {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 6px;
   color: var(--text-muted);
   text-decoration: none;
   font-size: 0.75rem;
   font-weight: 600;
   position: relative;
-  padding: 7px 18px;
+  padding: 7px 16px;
   border-radius: var(--radius-full);
   transition: all 0.2s ease;
 }
@@ -1276,21 +1388,28 @@ body {
 }
 
 .nav-tab-badge {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  background: var(--danger);
-  color: #FFFFFF;
-  font-size: 0.58rem;
-  font-weight: 700;
-  min-width: 14px;
-  height: 14px;
-  padding: 0 3px;
-  border-radius: var(--radius-full);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1.5px solid var(--card-bg);
+  font-size: 0.62rem;
+  font-weight: 700;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+  border-radius: var(--radius-full);
+  line-height: 1;
+  transition: all 0.2s ease;
+}
+
+.nav-tab-btn.active .nav-tab-badge {
+  background: #FFFFFF;
+  color: var(--olive-main);
+  font-weight: 800;
+}
+
+.nav-tab-btn:not(.active) .nav-tab-badge {
+  background: var(--olive-main);
+  color: #FFFFFF;
 }
 
 /* ── Interactive Tutorial Walkthrough ── */
