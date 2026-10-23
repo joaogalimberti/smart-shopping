@@ -100,7 +100,24 @@ const appIcons = {
  */
 export function renderIcons(root = document) {
   try {
+    const targetRoot = (root && (root.nodeType === 1 || root.nodeType === 9 || root.nodeType === 11)) ? root : document;
+    
+    // Check if global lucide is available (e.g. from CDN script)
+    if (typeof window !== 'undefined' && window.lucide && typeof window.lucide.createIcons === 'function') {
+      window.lucide.createIcons({
+        root: targetRoot,
+        nameAttr: 'data-lucide',
+        attrs: {
+          'stroke-width': '2',
+          class: 'lucide-icon'
+        }
+      });
+      return;
+    }
+
+    // Fallback to bundled createIcons with custom appIcons
     createIcons({
+      root: targetRoot,
       icons: appIcons,
       nameAttr: 'data-lucide',
       attrs: {

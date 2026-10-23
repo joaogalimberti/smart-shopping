@@ -104,6 +104,16 @@ html, body {
   min-height: 100%;
 }
 
+/* ── Lucide SVG Icons ── */
+.lucide, .lucide-icon, svg.lucide {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  stroke: currentColor;
+  stroke-width: 2px;
+  fill: none;
+}
+
 body {
   font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   background-color: var(--desktop-bg);

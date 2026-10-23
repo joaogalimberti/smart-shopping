@@ -2,8 +2,8 @@ import { defineConfig } from 'vite'
 import { resolve } from 'path'
 
 export default defineConfig({
-  // GitHub Pages base: /shopping-list-system/
-  base: '/shopping-list-system/',
+  // Universal relative base for GitHub Pages (works on both /smart-shopping/ and /shopping-list-system/)
+  base: './',
 
   // Multi-page app: index.html + lista.html
   build: {
